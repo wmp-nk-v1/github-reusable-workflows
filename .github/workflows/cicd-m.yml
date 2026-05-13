@@ -30,9 +30,8 @@ jobs:
       - name: Helm Deploy
         run: |
           aws eks update-kubeconfig --name dev
-          argocd_server=$(kubectl get svc argocd-server  -o jsonpath='{.status.loadBalancer.ingress[].hostname}')
           argocd_admin_password=$(kubectl get secrets argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d)
-          make argocd-deploy image_tag=${GITHUB_SHA} argocd_server=${argocd_server} argocd_admin_password=${argocd_admin_password}
+          make argocd-deploy image_tag=${GITHUB_SHA} argocd_server=argocd-dev.tek-nik.com argocd_admin_password=${argocd_admin_password}
 
 
   qa-deploy:
